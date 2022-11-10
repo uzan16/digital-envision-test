@@ -9,11 +9,13 @@ import { ISort } from '../../../interface';
 interface Props {
   text: string;
   onSelect: Function;
+  testID?: string;
 }
 
 const SortOption = ({
   text,
-  onSelect
+  onSelect,
+  testID
 }: Props) => {
   const [chooserVisible, setChooserVisible] = React.useState(false);
   const data: ISort[] = [
@@ -28,11 +30,16 @@ const SortOption = ({
   ]
   return (
     <>
-      <TouchableOpacity style={style.wrapper} activeOpacity={0.7} onPress={() => setChooserVisible(true)}>
+      <TouchableOpacity
+        style={style.wrapper}
+        activeOpacity={0.7}
+        onPress={() => setChooserVisible(true)}
+        testID={testID}
+      >
         <Text style={style.caption}>
           Sort By:
         </Text>
-        <Text style={style.value}>
+        <Text style={style.value} testID='selectedOption'>
           {` ${text}`}
         </Text>
         <Icon 

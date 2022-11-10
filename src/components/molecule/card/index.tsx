@@ -15,6 +15,8 @@ interface Props {
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
   onFavoritePress?: ((event: GestureResponderEvent) => void) | undefined;
   style?: StyleProp<ViewStyle>;
+  cardTestID?: string;
+  favoriteTestID?: string;
 }
 
 const Content = ({
@@ -61,6 +63,7 @@ const Card = (props: Props) => {
         style={[style.wrapper, props.style]}
         onPress={props.onPress}
         activeOpacity={0.7}
+        testID={props.cardTestID}
       >
         <Content {...props} />
       </TouchableOpacity>

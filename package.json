@@ -51,6 +51,7 @@
     "transformIgnorePatterns": [
       "node_modules/(?!@react-native|react-native)"
     ],
+    "setupFiles": ["./jestSetupFile.js"],
     "moduleFileExtensions": [
       "ts",
       "tsx",
