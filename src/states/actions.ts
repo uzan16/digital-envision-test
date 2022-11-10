@@ -3,16 +3,14 @@ import { KEY_MASTER_ID, KEY_TOKEN } from '../data/constant';
 import { IMaster, IPet, IResponseError, IResponseLogin, ISort } from '../interface';
 import {Context} from './index';
 
-export const checkIsAuthenticated = async () => {
+export const preProcessToken = async ({actions}: Context) => {
   try {
-    let res = true;
-    let token = await AsyncStorage.getItem(KEY_TOKEN);
-    if (!token) {
-      res = false;
-    }
-    return res;
+    await actions.loginAccount({
+      username: 'yourname',
+      password: 'yourpassword'
+    })
   } catch (e) {
-    return false;
+    return;
   }
 };
 
@@ -40,6 +38,7 @@ export const loadAppData = async (context: Context): Promise<void> => {
 
       // set master
       let masterID = await AsyncStorage.getItem(KEY_MASTER_ID);
+      console.log('masterid', masterID)
       if (masterID) {
         const obj = context.state.owners.find(x => x.id === +(masterID || ''))
         if (obj) {

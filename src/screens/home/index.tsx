@@ -12,7 +12,7 @@ import BlockScreenLoading from '../../components/atom/block-screen-loading';
 
 const HomeScreen: React.FC<ScreenProps<'Home'>> = ({navigation}) => {
 
-  const {loginAccount, loadAppData, checkIsAuthenticated, setSort, setFavorite} = useActions();
+  const {loadAppData, preProcessToken, setSort, setFavorite} = useActions();
   const {orderedOwners, sort, selectedMaster} = useAppState();
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -25,13 +25,7 @@ const HomeScreen: React.FC<ScreenProps<'Home'>> = ({navigation}) => {
   const preProcess = async() => {
     setIsLoading(true);
     try {
-      const authenticated = await checkIsAuthenticated();
-      if (!authenticated) {
-        await loginAccount({
-          username: 'yourname',
-          password: 'yourpassword'
-        });
-      }
+      await preProcessToken();
     } finally {
       setIsLoading(false);
       getMaster();
@@ -62,7 +56,7 @@ const HomeScreen: React.FC<ScreenProps<'Home'>> = ({navigation}) => {
     <Hoc>
       <MasterCard showBackButton={false} item={selectedMaster} />
       <SectionTitle text='Owners List' action={
-        <SortOption onSelect={(item: ISort) => setSort(item)} text={sort.label}/>
+        <SortOption onSelect={(item: ISort) => setSort(item)} text={sort.label} testID="sortButton"/>
       } />
       <FlatList
         data={orderedOwners}
@@ -77,6 +71,7 @@ const HomeScreen: React.FC<ScreenProps<'Home'>> = ({navigation}) => {
             showAction={true}
             showStar={true}
             onFavoritePress={() => handleFavoriteClick(item)}
+            cardTestID='goToDetail'
           >
             <Text style={style.listText}>
               {`${item.firstName} ${item.lastName}`}
