@@ -38,7 +38,6 @@ export const loadAppData = async (context: Context): Promise<void> => {
 
       // set master
       let masterID = await AsyncStorage.getItem(KEY_MASTER_ID);
-      console.log('masterid', masterID)
       if (masterID) {
         const obj = context.state.owners.find(x => x.id === +(masterID || ''))
         if (obj) {
